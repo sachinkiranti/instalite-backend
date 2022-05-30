@@ -14,4 +14,14 @@ class UserService
         $this->user = $user;
     }
 
+    public function create(array $data)
+    {
+        return $this->user->create($data);
+    }
+
+    public function user()
+    {
+        return auth()->user();
+    }
+
 }
