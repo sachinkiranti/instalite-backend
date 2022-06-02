@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\User\LoginRequest;
 use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
-use App\Http\Requests\User\RegisterRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\User\LoginRequest;
+use App\Http\Requests\User\RegisterRequest;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends BaseController
@@ -26,7 +26,7 @@ class AuthController extends BaseController
         return $this->responseOk([
             'user'  => $user,
             'token' => $user->createToken('secret')->plainTextToken,
-        ], 'You have successfully registered.');
+        ], Response::HTTP_CREATED,'You have successfully registered.');
     }
 
     public function login( LoginRequest $request )

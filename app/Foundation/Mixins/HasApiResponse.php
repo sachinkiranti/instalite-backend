@@ -27,6 +27,7 @@ trait HasApiResponse
 
     /**
      * @param $body
+     * @param int $status
      * @param string $message
      * @param string $messageCode
      * @param array $headers
@@ -34,13 +35,14 @@ trait HasApiResponse
      */
     public function responseOk(
         $body,
+        int $status = Response::HTTP_OK,
         string $message = 'ok',
         string $messageCode = 'ok',
         array $headers = []
     ): JsonResponse {
         return $this->apiResponse(
             $body,
-            Response::HTTP_OK,
+            $status,
             $message,
             $messageCode,
             $headers
@@ -86,7 +88,7 @@ trait HasApiResponse
     ): JsonResponse {
         return $this->responseError(
             $body,
-            Response::HTTP_EXPECTATION_FAILED,
+            Response::HTTP_UNPROCESSABLE_ENTITY,
             $message,
             $code,
             $headers
