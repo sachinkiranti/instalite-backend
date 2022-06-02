@@ -45,7 +45,7 @@ class AuthController extends BaseController
         return $this->responseOk([
             'user'  => $user,
             'token' => $user->createToken('secret')->plainTextToken,
-        ], 'You have successfully logged in.');
+        ], Response::HTTP_OK, 'You have successfully logged in.');
     }
 
     public function logout()
@@ -53,6 +53,7 @@ class AuthController extends BaseController
         $this->userService->user()->tokens()->delete();
         return $this->responseOk(
             null,
+            Response::HTTP_OK,
             'You have been successfully logged out.'
         );
     }

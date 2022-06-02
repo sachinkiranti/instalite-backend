@@ -23,17 +23,25 @@ class AuthTest extends TestCase
     {
         $user = User::factory()->make();
 
-        $this->postJson( route('auth.register'), [
-            'name' => $user->name,
-            'email' => $user->email,
-            'password' => 'secret',
-            'password_confirmation' => 'secret',
-        ] )
-            ->assertCreated();
+        $response = $this->postJson( route('auth.register'), [
+                'name' => $user->name,
+                'email' => $user->email,
+                'password' => 'secret',
+                'password_confirmation' => 'secret',
+            ] )
+            ->assertCreated()
+            ->json();
+
+        $this->assertEquals('You have successfully registered.', $response['status']['message']);
 
         $this->assertDatabaseHas('users', [
             'name' => $user->name,
         ]);
+    }
+
+    public function test_a_user_can_login()
+    {
+        $user = User::factory()->make();
     }
     
 }
