@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Hash;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -49,6 +50,21 @@ class User extends Authenticatable
         if ($value) {
             $this->attributes['password'] = Hash::make($value);
         }
+    }
+
+    public function posts(): HasMany
+    {
+        return $this->hasMany( Post::class );
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany( Comment::class );
+    }
+
+    public function reactions(): HasMany
+    {
+        return $this->hasMany( Reaction::class );
     }
 
 }
